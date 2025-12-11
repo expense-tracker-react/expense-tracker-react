@@ -1,383 +1,193 @@
-# Expense Tracker React – Budget & Dashboard Enhancement
+# Expense Tracker React – Budget Feature Enhancement
 
-Final Group Project – Software Project Management  
-Open Source Enhancement – Expense Tracker (React)
+> Software Engineering Principles – Final Group Project  
+> Group 2 – Expense Tracker React
 
-Repository: https://github.com/Rahul26240/expense-tracker-react
+**Conestoga College – Software Engineering Principles**
+
+**Team**
+
+- Tarun Sarikopula – 9036541  
+- Rahul Jadhav – 9002088  
+- Mekala Dora Babu – 9028294  
 
 ---
 
 ## 1. Project Overview
 
-This project enhances an existing open-source **Expense Tracker React** application by adding a complete **Budget Management & Dashboard feature set**.
+The original **Expense Tracker React** application allowed users to:
 
-The enhancement focuses on:
+- Add income and expense transactions  
+- Categorize transactions  
+- View a list of past transactions  
+- See a simple summary of totals
 
-- Defining and managing a **monthly budget**
-- Calculating and showing **remaining budget** in real time
-- A **dashboard summary** (budget, spending, remaining)
-- A **spending vs budget chart**
-- A centralized **validation system**
-- **Testing & QA** with clear traceability
-- Organized **GitHub Project Management** using Epics, Issues, Relationships, and Milestones
+However, it **did not support budgeting**. Users could not define a monthly budget, track remaining balance, or visually compare spending against a plan.
 
-The goal is not only to add functionality, but also to demonstrate **good project management practices**: clear requirements, assumptions, validation plan, issue breakdown, epics, milestones, and production readiness.
+This project implements a **Budget Feature Enhancement** that turns the app into a simple budgeting assistant. The enhancement adds:
 
----
+- Monthly budget entry and updates  
+- Automatic remaining budget calculation  
+- A dashboard summary with status indicators  
+- A spending vs. budget chart  
+- Centralized validation for all inputs  
+- LocalStorage-based persistence  
 
-## 2. Base Application (Open Source Project)
-
-**Base Project:** Expense Tracker built with React  
-**Technology Stack:**
-
-- React (Functional Components, Hooks)
-- Context API for global state
-- JavaScript / JSX
-- CSS for styling
-- Local storage for persistence (after enhancement)
-
-The original app mainly handled **tracking expenses**. The enhancement builds on top of it to add **budget awareness and richer visualization**.
+The goal of the project is not just coding, but also demonstrating **good software engineering and project management practices** using GitHub Projects, issues, milestones, diagrams, and documentation.
 
 ---
 
-## 3. Enhancement Summary
+## 2. Key Features
 
-### 3.1 Enhancement Goals
+### Budgeting
 
-The enhancement introduces a **Budget Module** and **Dashboard Enhancements**:
+- Set a **monthly budget** using a dedicated input field.  
+- Update the budget at any time (e.g., if plans change).  
+- Budget is validated (numeric, positive, non-empty) before saving.
 
-1. Allow users to **define and update a monthly budget**.
-2. Calculate **remaining budget** based on total spending.
-3. Provide a **dashboard summary view** for:
-   - Monthly Budget
-   - Total Spending
-   - Remaining Budget
-   - Status indicator (under / near / over budget)
-4. Provide a **chart** showing **Spending vs Budget**.
-5. Add **validation** for budget and transaction inputs.
-6. Add **local storage persistence** for budget and transactions.
-7. Improve **UI styling and responsiveness**.
-8. Implement a **testing & QA process** with issues and a test plan.
+### Remaining Budget Calculation
 
----
+- Automatically calculates:
+  - Total spending for the month  
+  - Remaining budget = `Budget – Total Spending`  
+- Tracks financial status with thresholds:
+  - **Healthy**: remaining > 50%  
+  - **Warning**: 10% – 50%  
+  - **Critical**: < 10% or over budget  
 
-## 4. Requirements
+### Dashboard Summary
 
-### 4.1 Functional Requirements
+- Central summary panel shows:
+  - Monthly Budget  
+  - Total Spending  
+  - Remaining Budget  
+  - Color-coded status indicator (Green / Yellow / Red)  
+- Values update **in real time** when budget or transactions change.
 
-**FR-1: Define Monthly Budget**  
-- User can enter a numeric monthly budget.
-- Budget cannot be negative or empty.
-- Budget is stored in state and later persisted.
+### Spending vs Budget Chart
 
-**FR-2: Update Monthly Budget**  
-- User can modify the existing budget.
-- Remaining budget recalculates immediately.
-- Dashboard and chart reflect updated values.
+- Interactive chart (e.g., using **Recharts**) to compare:
+  - Budget vs. total spending  
+- Reacts to changes in:
+  - Budget  
+  - Transaction list  
+- Shows a friendly message if there is not enough data.
 
-**FR-3: Remaining Budget Calculation**  
-- System calculates:
-  - `remainingBudget = monthlyBudget - totalSpending`
-- Updates whenever:
-  - Budget changes
-  - Transactions are added/edited/deleted
+### Validation Service
 
-**FR-4: Dashboard Summary**  
-- Dashboard displays:
-  - Monthly Budget
-  - Total Spending
-  - Remaining Budget
-  - Status indicator (green/yellow/red)
-- Dashboard updates automatically on state changes.
+- Central `ValidationService` handles:
+  - Budget validation  
+  - Transaction amount and description validation  
+- Prevents saving invalid data and shows inline error messages.
 
-**FR-5: Spending vs Budget Chart**  
-- Chart compares:
-  - Total Spending vs Monthly Budget
-- Auto-updates on budget or transaction changes.
-- Shows clear visual difference.
+### Data Persistence
 
-**FR-6: Validation**  
-- Budget input:
-  - Required, numeric, ≥ 0
-- Transaction:
-  - Amount required, numeric, > 0
-  - Description required
-- Invalid input shows clear error messages.
-
-**FR-7: Persistence**  
-- Budget and transaction data are stored in local storage.
-- Data is restored when user revisits the app.
-
-**FR-8: Testing & QA**  
-- A test plan is defined.
-- Critical paths (budget, remaining, dashboard) tested.
-- Bugs are tracked and retested via GitHub issues.
+- Budget and transactions are saved to **LocalStorage** whenever they change.  
+- On app start:
+  - Existing data is loaded into `BudgetContext` and `TransactionContext`.  
+  - If nothing exists, default values are used.
 
 ---
 
-### 4.2 Non-Functional Requirements
+## 3. Architecture & Design
 
-- **Usability:** UI must be simple and intuitive.
-- **Performance:** Calculations and UI updates happen instantly (no noticeable lag).
-- **Reliability:** No invalid data should enter the system.
-- **Maintainability:** Code separated into reusable components, context, and services.
-- **Responsiveness:** Dashboard works on desktop and mobile screen sizes.
+### High-Level Architecture
 
----
-
-## 5. Assumptions & Constraints
-
-### 5.1 Assumptions
-
-- Single user using the application in one browser (no multi-user accounts).
-- Budget is defined **per month** (no yearly or weekly budgeting yet).
-- Time zone and currency specifics are not critical for this assignment.
-- Users are comfortable entering amounts manually.
-
-### 5.2 Constraints
-
-- Enhancement must use the existing **React** codebase.
-- Must align with the course **Final Project** requirements.
-- Must be managed fully in **GitHub Projects** (Issues, Epics, Milestones).
-- No backend server or database – persistence via **localStorage** only.
-
-### 5.3 Validation Plan (High-Level)
-
-To validate assumptions and requirements:
-
-- Manual testing using realistic usage scenarios.
-- Traceability from **requirements → issues → implementation → tests**.
-- Visual verification of UI and charts.
-- Reviewing GitHub project board and relationships to ensure workflows are covered.
-
----
-
-## 6. System Design & Diagrams
-
-> Note: Diagrams are stored in `/docs` (filenames may be adjusted to match actual uploads).
-
-- `/docs/architecture-diagram.png` – High-level architecture (Contexts + Components).
-- `/docs/uml-class-diagram.png` – UML for BudgetContext, TransactionContext, and key components.
-- `/docs/component-hierarchy.png` – React component tree for Dashboard.
-- `/docs/dashboard-wireframes.png` – Wireframes for desktop and mobile dashboard.
-
-### 6.1 Architecture Overview
-
-**Key pieces:**
-
-- `BudgetContext`  
-  - Holds `monthlyBudget`, `remainingBudget`, and update functions.
-- `TransactionContext`  
-  - Holds expense list and `totalSpending`.
-- `DashboardSummary`  
-  - Displays Budget / Spent / Remaining + status.
-- `BudgetInput`  
-  - UI for setting/updating budget.
-- `BudgetSpendingChart`  
-  - Visual comparison of budget vs spending.
-- `ValidationService`  
-  - Shared validation logic for all inputs.
-
-Data flow:
-
-1. User sets/updates budget via `BudgetInput`.
-2. `BudgetContext` stores budget and calculates remaining.
-3. Transactions trigger `totalSpending` in `TransactionContext`.
-4. Dashboard and chart subscribe to both contexts and update reactively.
-
----
-
-## 7. Project Management Structure (GitHub)
-
-The project uses **GitHub Issues + Epics + Milestones + Relationships** to show proper project management.
-
-### 7.1 Epics (Parent Issues)
-
-The following Epics are created as **parent issues**:
-
-1. **EPIC: Monthly Budget Feature (Define, Update & Manage Budget)**  
-2. **EPIC: Dashboard Summary & Financial Overview**  
-3. **EPIC: Spending vs Budget Chart Feature**  
-4. **EPIC: Input Validation System**  
-5. **EPIC: Testing & QA for Budget Module**  
-6. **EPIC: Requirements, Assumptions, Diagrams & Planning**
-
-Each Epic has multiple **sub-issues** attached via the GitHub “Relationships → Parent issue” panel.
-
-### 7.2 Example Epic → Issues Mapping
-
-**EPIC: Monthly Budget Feature**  
-Sub-issues include (issue numbers may vary):
-
-- #1 – Define Monthly Budget (user story)
-- #2 – UI for Budget Input
-- #3 – Remaining Budget Calculation
-- #15 – Implement BudgetContext
-- #16 – BudgetInput Component
-- #17 – Budget Update Logic
-- #24 – Budget Validation
-- #27 – Local Storage for Budget
-
-**EPIC: Dashboard Summary & Financial Overview**
-
-- #4 – Dashboard Summary User Story
-- #20 – DashboardSummary Component
-- #26 – Wire Dashboard to Live Data
-- #28 – Dashboard UI Styling
-
-…and similarly for Chart, Validation, Testing, and Requirements Epics.
-
-### 7.3 Blocking / Blocked-By Relationships
-
-Some key dependency relationships:
-
-- `BudgetContext` (e.g., #15)  
-  **blocks**:
-  - BudgetInput (#16)
-  - Remaining Calculation (#19)
-  - DashboardSummary (#20)
-
-- `ValidationService` (#23)  
-  **blocks**:
-  - Budget Validation (#24)
-  - Transaction Validation (#25)
-
-- Chart Library Integration (#21)  
-  **blocks**:
-  - Auto-update chart (#22)
-
-- Test Plan (#29)  
-  **blocks**:
-  - Final Testing & Bug Retesting (#8, #30)
-
-This models a **critical path** from requirements → core logic → UI → testing.
-
-### 7.4 Milestones
-
-Milestones are used like phases:
-
-- **Milestone 1 – Requirements & Design (Month 1 of 3)**
-  - Requirements, scope, assumptions, diagrams.
-- **Milestone 2 – Development & Integration (Month 2 of 3)**
-  - Contexts, components, dashboard, chart, validation, persistence.
-- **Milestone 3 – Testing & Finalization (Month 3 of 3)**
-  - Test plan, execution, bug fixes, final documentation.
-
-All issues are assigned to **one of the milestones**, showing clear planning and timeboxing.
-
----
-
-## 8. Implementation Overview
-
-### 8.1 Frontend (React)
-
-- Built using functional components and hooks (`useState`, `useContext`, `useEffect`).
-- New components:
+- **React Components**
   - `BudgetInput`
   - `DashboardSummary`
-  - `BudgetSpendingChart`
-- Styling:
-  - Consistent with existing app.
-  - Improved spacing, layout, and responsiveness for dashboard.
+  - `TransactionsList`
+  - `SpendingChart`
+- **Context Layer**
+  - `BudgetContext` – holds current budget and remaining amount.
+  - `TransactionContext` – holds income/expense transactions.
+- **Services**
+  - `ValidationService` – reusable input validation logic.
+  - `storageService` (or similar) – wrapper for LocalStorage access.
 
-### 8.2 State Management (Context)
+### Data Flow (User Flow Summary)
 
-- **BudgetContext**:
-  - `monthlyBudget`
-  - `remainingBudget`
-  - `setBudget()`, `updateBudget()`, `calculateRemaining()`
-- **TransactionContext**:
-  - List of transactions
-  - `totalSpending` calculation for current period
+1. User opens the app → Dashboard loads budget + transactions from LocalStorage.  
+2. User enters a budget or transaction.  
+3. `ValidationService` validates the input.  
+4. If invalid → error message shown; nothing is saved.  
+5. If valid → `BudgetContext` / `TransactionContext` update state.  
+6. Updated data is saved to LocalStorage.  
+7. Dashboard + Chart rerender, showing the latest financial summary.
 
-### 8.3 Persistence
+### Diagrams (in `/docs` or `/diagrams` folder)
 
-- `localStorage` used to store:
-  - `monthlyBudget`
-  - Transactions
-- On app load:
-  - Data is read from `localStorage` (if available)
-  - Contexts hydrate from stored values
-
----
-
-## 9. Validation & Error Handling
-
-Validation is centralized in a **ValidationService** module:
-
-- `validateBudget(amount)`  
-- `validateAmount(amount)`  
-- `validateDescription(text)`  
-
-Used by:
-
-- `BudgetInput` (budget form)
-- Transaction form
-
-**Error Handling:**
-
-- Invalid values prevent form submission.
-- Error messages displayed inline under input.
-- No invalid data is stored in context or local storage.
+- **Use Case Diagram**
+- **ERD (Budget, Transaction, Category)**
+- **User Flow / Data Flow Diagram**
+- **Component / Architecture Overview**
 
 ---
 
-## 10. Testing & QA
+## 4. Functional & Non-Functional Requirements
 
-Testing is managed via GitHub issues and a test plan.
+The full list of **Functional Requirements (FR1–FR7)** and **Non-Functional Requirements (NFR1–NFR5)** is documented in the project report (`/docs/SEP_Final_Report.pdf` or `.docx`).
 
-### 10.1 Test Plan (Issue #29)
+Examples:
 
-The test plan covers:
+- **FR1–FR2**: Define and update a monthly budget.  
+- **FR3**: Automatic remaining budget calculation with thresholds.  
+- **FR4–FR5**: Dashboard summary + spending vs budget chart.  
+- **FR6**: Centralized validation for all inputs.  
+- **FR7**: Persistent storage using LocalStorage.
 
-- Budget creation & update
-- Remaining budget calculation
-- Dashboard updates
-- Chart behavior
-- Validation behavior
-- Responsiveness on different screen sizes
-- Regression tests to ensure existing expense features still work
-
-### 10.2 Final Testing & Bug Fixes (Issues #8, #30)
-
-- Execute full test plan.
-- Log defects as GitHub issues (where applicable).
-- Retest after fixes.
-- Close issues after verification.
-- Ensure the application is **production-ready** at the end.
+Non-functional areas include **Usability, Performance, Scalability, Maintainability, and Compatibility.**
 
 ---
 
-## 11. Requirements Traceability (Sample)
+## 5. Project Management (GitHub Projects)
 
-| Requirement (FR)                    | Issue(s)                    | Epic                          |
-|------------------------------------|-----------------------------|-------------------------------|
-| FR-1 Define Monthly Budget         | #1, #2, #15, #16            | EPIC: Monthly Budget Feature  |
-| FR-3 Remaining Budget Calculation  | #3, #18, #19                | EPIC: Monthly Budget Feature  |
-| FR-4 Dashboard Summary             | #4, #20, #26, #28           | EPIC: Dashboard Summary       |
-| FR-5 Spending vs Budget Chart      | #5, #21, #22                | EPIC: Chart Feature           |
-| FR-6 Validation                    | #6, #23, #24, #25           | EPIC: Validation System       |
-| FR-8 Testing & QA                  | #8, #29, #30                | EPIC: Testing & QA            |
+The team used **GitHub Projects** to manage work:
 
-This traceability shows that each requirement is implemented and testable via mapped GitHub issues.
+- One EPIC:
+
+  - `EPIC: Monthly Budget Feature (Define, Update & Manage Monthly Budget)`  
+
+- Issue groups:
+  - **Requirements & Documentation**
+  - **Feature Development (Context, Dashboard, Chart)**
+  - **Validation & Bug Fixing**
+  - **Testing & QA**
+- Columns:
+  - `Backlog` → `Ready` → `In Progress` → `In Review` → `Done`
+- Each issue has:
+  - Clear title and description
+  - Labels (backend, frontend, enhancement, validation, QA, etc.)
+  - Linked to the EPIC where appropriate
+  - Assigned to one or more team members
+
+This structure demonstrates traceability from requirements → tasks → implementation.
 
 ---
 
-## 12. How to Run the Project
+## 6. Technology Stack
+
+- **Frontend:** React.js, JavaScript (ES6+)  
+- **State Management:** React Context API  
+- **Charting:** Recharts (or another React chart library)  
+- **Styling:** CSS / Flexbox / basic responsive design  
+- **Persistence:** Browser LocalStorage  
+- **Tools:** Git, GitHub Projects, VS Code
+
+---
+
+## 7. Getting Started (Run Locally)
+
+### Prerequisites
+
+- Node.js (LTS) and npm installed  
+- Git installed
+
+### Clone the Repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/Rahul26240/expense-tracker-react.git
-
 cd expense-tracker-react
-
-# Install dependencies
-npm install
-
-# Start the development server
-npm start
----
-
 ## Git Commit Practices
 
 The project follows a clean and professional Git commit strategy to ensure clarity and traceability throughout development.
@@ -416,7 +226,4 @@ feat(budget): implement BudgetContext and monthly budget state #15
 - Demonstrates professional engineering practices  
 - Maintains full traceability between requirements, issues, and implementation  
 
-This commit strategy aligns with industry standards and supports full project transparency.
-
-
-
+This commit strategy aligns with industry standards and supports full project transparency.
