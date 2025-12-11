@@ -377,4 +377,45 @@ npm install
 # Start the development server
 npm start
 
+## Git Commit Practices
+
+The project follows a clean and professional Git commit strategy to ensure clarity and traceability throughout development.
+
+### Commit Message Format
+All commits follow the structure:
+
+<type>(scope): short description  #issue-number
+
+Example:
+feat(budget): implement BudgetContext and monthly budget state #15
+
+### Commit Types Used
+- feat: new features
+- fix: bug fixes
+- refactor: code restructuring
+- style: UI or formatting updates
+- docs: documentation changes
+- test: test case additions
+- chore: cleanup, maintenance tasks
+
+### Example Commit Messages
+- feat(ui): create BudgetInput component with inline validation #16  
+- feat(logic): add remaining budget calculation and state updates #19  
+- feat(dashboard): implement DashboardSummary with status indicator #20  
+- feat(chart): integrate Recharts for Spending vs Budget visualization #21  
+- fix(validation): enforce numeric rules for budget field #24  
+- chore(storage): enable LocalStorage persistence for budget and transactions #27  
+- test(plan): add initial functional test cases #29  
+- docs(readme): update project documentation and diagrams #32  
+
+### Why This Matters
+- Ensures each commit represents one clear, isolated change  
+- Improves project maintainability  
+- Makes debugging easier  
+- Demonstrates professional engineering practices  
+- Maintains full traceability between requirements, issues, and implementation  
+
+This commit strategy aligns with industry standards and supports full project transparency.
+
+
 
