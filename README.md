@@ -205,7 +205,7 @@ feat(budget): implement BudgetContext and monthly budget state #15
 - test: test case additions
 - chore: cleanup, maintenance tasks
 
-### Example Commit Messages
+### Commit Messages
 - feat(ui): create BudgetInput component with inline validation #16  
 - feat(logic): add remaining budget calculation and state updates #19  
 - feat(dashboard): implement DashboardSummary with status indicator #20  
