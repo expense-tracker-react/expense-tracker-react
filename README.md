@@ -115,18 +115,12 @@ The goal of the project is not just coding, but also demonstrating **good softwa
 6. Updated data is saved to LocalStorage.  
 7. Dashboard + Chart rerender, showing the latest financial summary.
 
-### Diagrams (in `/docs` or `/diagrams` folder)
-
-- **Use Case Diagram**
-- **ERD (Budget, Transaction, Category)**
-- **User Flow / Data Flow Diagram**
-- **Component / Architecture Overview**
 
 ---
 
 ## 4. Functional & Non-Functional Requirements
 
-The full list of **Functional Requirements (FR1–FR7)** and **Non-Functional Requirements (NFR1–NFR5)** is documented in the project report (`/docs/SEP_Final_Report.pdf` or `.docx`).
+The full list of **Functional Requirements (FR1–FR7)** and **Non-Functional Requirements (NFR1–NFR5)** is documented in the project report.
 
 Examples:
 
@@ -185,10 +179,12 @@ This structure demonstrates traceability from requirements → tasks → impleme
 
 ### Clone the Repository
 
-```bash
+ bash
 git clone https://github.com/Rahul26240/expense-tracker-react.git
 cd expense-tracker-react
-## Git Commit Practices
+
+
+### Git Commit Practices
 
 The project follows a clean and professional Git commit strategy to ensure clarity and traceability throughout development.
 
