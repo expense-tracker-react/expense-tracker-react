@@ -184,7 +184,7 @@ git clone https://github.com/Rahul26240/expense-tracker-react.git
 cd expense-tracker-react
 
 
-### Git Commit Practices
+### 8. Git Commit Practices
 
 The project follows a clean and professional Git commit strategy to ensure clarity and traceability throughout development.
 
